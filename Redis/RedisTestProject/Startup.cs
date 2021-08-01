@@ -22,6 +22,8 @@ namespace RedisTestProject
         {
             app.UseRouting();
 
+            app.UseMiddleware<SessionMiddleware>();
+
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             var serviceProvider = app.ApplicationServices;
