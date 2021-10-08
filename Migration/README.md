@@ -1,17 +1,48 @@
 #### C# MySqlConnector Migration
 
-* º¯°æ ÀÌÀ¯
-	* À¥ »çÀÌÆ®¸¦ µ¹¾Æ´Ù´Ï´Ùº¸´Ï, ¾Æ·¡ ¸µÅ©¿¡ ÀÖ´Â ±ÛÀ» ÀĞ°Ô µÊ
+* ë³€ê²½ ì´ìœ 
+	* ì›¹ ì‚¬ì´íŠ¸ë¥¼ ëŒì•„ë‹¤ë‹ˆë‹¤ë³´ë‹ˆ, ì•„ë˜ ë§í¬ì— ìˆëŠ” ê¸€ì„ ì½ê²Œ ë¨
 		* https://mysqlconnector.net/
-	* È®ÀÎÇØº¸´Ï MIT¿¡¼­ ¸¸µç MySqlConnector¿¡ ´ëÇÑ º¥Ä¡¸¶Å© °á°ú.
-		* ³»°¡ ÁÖ·Î »ç¿ëÇÏ´ø OracleÀÇ Connector/NET¿¡ ´ëÇÑ Æò°¡µµ ÇÔ²² ½Ç·Á ÀÖÀ½.
-		* ±Û¿¡¼­ ÀÚ½ÅµéÀº OracleÀÇ Connector/NETÀ» ±â¹İÀ¸·Î ÇÏÁö ¾Ê¾Ò´Ù°í µÇ¾î ÀÖÀ¸³ª
-			* ´ëºÎºĞÀÇ Å¬·¡½º ³×ÀÌ¹ÖµéÀÌ ¸ğµÎ ¶È°°À½.
-	* ¸¸¾à º¥Ä¡¸¶Å© °á°ú°¡ »ç½ÇÀÌ°í ½ÇÁ¦ °ÔÀÓ¿¡¼­µµ Latency¸¦ ÁÙÀÏ ¼ö ÀÖ´Ù¸é
-		* ³×ÀÌ¹ÖÀÌ °°À¸¹Ç·Î º¯°æ¿¡ ¼Ò¸ğµÇ´Â ½Ã°£À» ¾Æ³¥ ¼ö ÀÖ´Ù°í ÆÇ´ÜÇÔ.
-	* °£´ÜÇÏ°Ô »ç¿ë ¿¹Á¦¿¡ ´ëÇÑ º¥Ä¡¸¶Å©¸¦ µ¹·Áº¸°í È®ÀÎÇØº¸ÀÚ.
+	* í™•ì¸í•´ë³´ë‹ˆ MITì—ì„œ ë§Œë“  MySqlConnectorì— ëŒ€í•œ ë²¤ì¹˜ë§ˆí¬ ê²°ê³¼.
+		* ë‚´ê°€ ì£¼ë¡œ ì‚¬ìš©í•˜ë˜ Oracleì˜ Connector/NETì— ëŒ€í•œ í‰ê°€ë„ í•¨ê»˜ ì‹¤ë ¤ ìˆìŒ.
+		* ê¸€ì—ì„œ ìì‹ ë“¤ì€ Oracleì˜ Connector/NETì„ ê¸°ë°˜ìœ¼ë¡œ í•˜ì§€ ì•Šì•˜ë‹¤ê³  ë˜ì–´ ìˆìœ¼ë‚˜
+			* ëŒ€ë¶€ë¶„ì˜ í´ë˜ìŠ¤ ë„¤ì´ë°ë“¤ì´ ëª¨ë‘ ë˜‘ê°™ìŒ.
+	* ë§Œì•½ ë²¤ì¹˜ë§ˆí¬ ê²°ê³¼ê°€ ì‚¬ì‹¤ì´ê³  ì‹¤ì œ ê²Œì„ì—ì„œë„ Latencyë¥¼ ì¤„ì¼ ìˆ˜ ìˆë‹¤ë©´
+		* ë„¤ì´ë°ì´ ê°™ìœ¼ë¯€ë¡œ ë³€ê²½ì— ì†Œëª¨ë˜ëŠ” ì‹œê°„ì„ ì•„ë‚„ ìˆ˜ ìˆë‹¤ê³  íŒë‹¨í•¨.
+	* ê°„ë‹¨í•˜ê²Œ ì‚¬ìš© ì˜ˆì œì— ëŒ€í•œ ë²¤ì¹˜ë§ˆí¬ë¥¼ ëŒë ¤ë³´ê³  í™•ì¸í•´ë³´ì.
 	
-* Âü°í
-	* ³»°¡ ÁÖ·Î ´Ù·ğ´ø ÇÁ·ÎÁ§Æ®´Â .net standard 2.0°ú .net core 3.1À» ÁÖ·Î »ç¿ë ÇÏ¿´´Ù.
-	* ½Ã°£ÀÌ ³²´Â´Ù¸é .net 5.0¿¡¼­´Â ¾î¶² °á°ú°¡ ÀÖ´ÂÁöµµ È®ÀÎÇØº¸ÀÚ.
+* ì°¸ê³ 
+	* ë‚´ê°€ ì£¼ë¡œ ë‹¤ë¤˜ë˜ í”„ë¡œì íŠ¸ëŠ” .net standard 2.0ê³¼ .net core 3.1ì„ ì£¼ë¡œ ì‚¬ìš© í•˜ì˜€ë‹¤.
+	* ì‹œê°„ì´ ë‚¨ëŠ”ë‹¤ë©´ .net 5.0ì—ì„œëŠ” ì–´ë–¤ ê²°ê³¼ê°€ ìˆëŠ”ì§€ë„ í™•ì¸í•´ë³´ì.
 			
+			
+---
+
+* Mean                 : Arithmetic mean of all measurements
+* Error                : Half of 99.9% confidence interval
+* StdDev               : Standard deviation of all measurements
+* Completed Work Items : The number of work items that have been processed in ThreadPool (per single operation)
+* Lock Contentions     : The number of times there was contention upon trying to take a Monitor's lock (per single operation)
+* Gen 0                : GC Generation 0 collects per 1000 operations
+* Allocated            : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+* 1 us                 : 1 Microsecond (0.000001 sec)
+
+
+---
+
+#### 1ì°¨ ì‹œë„
+
+
+* test sp
+
+```
+ select 0 as 'test_result';
+```
+
+| Method |       Mean |    Error |   StdDev | Completed Work Items | Lock Contentions |  Gen 0 | Allocated |
+|------- |-----------:|---------:|---------:|---------------------:|-----------------:|-------:|----------:|
+|    MIT | 1,146.9 us | 17.36 us | 16.24 us |               3.0039 |                - |      - |      9 KB |
+| Oracle |   954.3 us | 13.91 us | 12.33 us |               0.0039 |                - | 1.9531 |     25 KB |
+
+* ì•„ë¬´ê²ƒë„ ë³€ê²½í•˜ì§€ ì•Šì€ ìƒíƒœì—ì„œëŠ” MITê°€ ë” ëŠë¦¬ê²Œ ë‚˜ì™”ë‹¤.
+	* ë” ë¹ ë¥´ê²Œí•˜ê¸° ìœ„í•´ì„œëŠ” ì–´ë–¤ ë°©ë²•ë“¤ì„ ì œê³µí•˜ëŠ”ì§€ ì°¾ì•„ë³´ê³  ë³€ê²½í•˜ëŠ” ê²ƒì´ ë„ˆë¬´ ë§ë‹¤ë©´ ê·¸ëŒ€ë¡œ í¬ê¸°. 
