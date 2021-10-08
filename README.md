@@ -3,7 +3,9 @@
 * 데이터베이스 테스트 프로젝트
 * 데이터베이스 [Wiki](https://github.com/junhun0106/DB/wiki)
   * SP Query 최적화
-  * 알아두면 좋은 Query  
+  * 알아두면 좋은 Query
+* [MySqlConnector](https://github.com/junhun0106/DB-REDIS/tree/main/Migration)
+  * 여러 Coneector를 사용해보고, 빠르고 사용하기 쉬운 라이브러리를 찾아보자. 
 
 
 
