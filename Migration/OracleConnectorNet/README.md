@@ -1,0 +1,1 @@
+* https://github.com/mysql/mysql-connector-net

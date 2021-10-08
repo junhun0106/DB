@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OracleConnectorNet", "OracleConnectorNet\OracleConnectorNet.csproj", "{11BB8AA4-E9AA-46A7-8147-95D51D58B0A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlConnectorMigration", "MySqlConnectorMigration\MySqlConnectorMigration.csproj", "{EB732ECC-6FF5-470C-96D5-89BAB36CF45D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MITMySqlConnector", "MITMySqlConnector\MITMySqlConnector.csproj", "{58080E8C-A09E-4186-9816-C25195AA4D86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Connector", "Connector", "{C4A05257-0E1B-48AD-9F20-C06E2157A266}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectorProxy", "ConnectorProxy\ConnectorProxy.csproj", "{5707B725-72F6-4ED3-B279-76438067A373}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbExtensions", "DbExtensions\DbExtensions.csproj", "{E774FA36-79C9-4407-AE10-8EECF5BCFC7E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11BB8AA4-E9AA-46A7-8147-95D51D58B0A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11BB8AA4-E9AA-46A7-8147-95D51D58B0A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11BB8AA4-E9AA-46A7-8147-95D51D58B0A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11BB8AA4-E9AA-46A7-8147-95D51D58B0A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB732ECC-6FF5-470C-96D5-89BAB36CF45D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB732ECC-6FF5-470C-96D5-89BAB36CF45D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB732ECC-6FF5-470C-96D5-89BAB36CF45D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB732ECC-6FF5-470C-96D5-89BAB36CF45D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58080E8C-A09E-4186-9816-C25195AA4D86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58080E8C-A09E-4186-9816-C25195AA4D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58080E8C-A09E-4186-9816-C25195AA4D86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58080E8C-A09E-4186-9816-C25195AA4D86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5707B725-72F6-4ED3-B279-76438067A373}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5707B725-72F6-4ED3-B279-76438067A373}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5707B725-72F6-4ED3-B279-76438067A373}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5707B725-72F6-4ED3-B279-76438067A373}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E774FA36-79C9-4407-AE10-8EECF5BCFC7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E774FA36-79C9-4407-AE10-8EECF5BCFC7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E774FA36-79C9-4407-AE10-8EECF5BCFC7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E774FA36-79C9-4407-AE10-8EECF5BCFC7E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{11BB8AA4-E9AA-46A7-8147-95D51D58B0A5} = {C4A05257-0E1B-48AD-9F20-C06E2157A266}
+		{58080E8C-A09E-4186-9816-C25195AA4D86} = {C4A05257-0E1B-48AD-9F20-C06E2157A266}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD213029-B7D3-4D32-B6B1-F435121E5C66}
+	EndGlobalSection
+EndGlobal
