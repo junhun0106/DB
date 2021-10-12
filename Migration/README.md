@@ -46,3 +46,40 @@
 
 * 아무것도 변경하지 않은 상태에서는 MIT가 더 느리게 나왔다.
 	* 더 빠르게하기 위해서는 어떤 방법들을 제공하는지 찾아보고 변경하는 것이 너무 많다면 그대로 포기. 
+
+
+---
+
+#### 2차 시도
+* MIT MySqlConnector에 설명을 보면 비동기 강화, Memory Allocated 강화를 볼 수 있다
+	*  Memory Allocated 경우 1차 시도에서 줄어든 것 확인
+* Multi Thread 환경에서 테스트 해보자
+
+```
+1차 테스트
+[MIT_async_test] 	count:10000 min:1ms, 	max:978ms, 	avg:691.1322ms, trimmed_mean:691.1725ms, thread_min:24, thread_max:44
+[MIT_warm_up] 		count:10 min:72ms, 	max:116ms, 	avg:100.2997ms, trimmed_mean:101.8746ms, thread_min:24, thread_max:24
+[Oracle_async_test] 	count:9999 min:0ms, 	max:39ms, 	avg:1.6713ms, trimmed_mean:1.6677ms, thread_min:24, thread_max:42
+[Oracle_warm_up] 	count:10 min:4ms, 	max:355ms, 	avg:39.7998ms, trimmed_mean:4.8747ms, thread_min:3, thread_max:22
+```
+
+```
+2차 테스트
+[MIT_async_test] count:9993 min:1ms, max:932ms, avg:3.0005ms, trimmed_mean:2.9077ms, thread_min:24, thread_max:38
+[MIT_warm_up] count:10 min:61ms, max:88ms, avg:93.2999ms, trimmed_mean:97.9998ms, thread_min:24, thread_max:24
+[Oracle_async_test] count:9996 min:1ms, max:29ms, avg:2.5049ms, trimmed_mean:2.5023ms, thread_min:24, thread_max:38
+[Oracle_warm_up] count:10 min:4ms, max:310ms, avg:35.6998ms, trimmed_mean:5.3747ms, thread_min:3, thread_max:18
+```
+
+* MIT가 느리다.
+* max가 튀는 부분이 존재 한다
+
+```
+[MIT_async_test,2590] 9978, 31ms -> 1550ms
+[MIT_async_test,5343] 9978, 31ms -> 932ms
+```
+
+* 세밀하게 보면 튀는 부분을 제외하면 평균적으로 MIT가 훨씬 빠르다. 왜 튀는지 좀 더 살펴 볼 필요가 있겠다.
+* sp 호출 자체를 확인 했을 때는 오래 걸리지 않는다.
+	* Task가 await 될 때 문제가 되거나(ThreadPool 반환), GC.WaitTime에 걸렸거나 ...
+
