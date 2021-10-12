@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using ConnectorProxy;
 using DbExtensions;
+using System.Diagnostics;
 
 namespace MITMySqlConnector
 {
@@ -11,7 +12,7 @@ namespace MITMySqlConnector
         public static async Task<int> mit_sp_test(this IConnectorProxy proxy)
         {
             const string sp = "sp_test";
-
+            var sw = Stopwatch.StartNew();
             try {
                 using (var conn = new MySqlConnection(proxy.ConnectionString)) {
                     await conn.OpenAsync().ConfigureAwait(false);
@@ -30,7 +31,10 @@ namespace MITMySqlConnector
             } catch (Exception e) {
                 Console.WriteLine($"{sp} - {e}");
             }
-
+            sw.Stop();
+            if (sw.ElapsedMilliseconds > 500) {
+                Console.WriteLine($"{sp} - {sw.ElapsedMilliseconds}ms");
+            }
             return -1;
         }
     }

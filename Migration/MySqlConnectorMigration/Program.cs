@@ -15,6 +15,7 @@ namespace MySqlConnectorMigration
 
     [MemoryDiagnoser]
     [ThreadingDiagnoser]
+    [MinColumn, MaxColumn, MeanColumn, MedianColumn]
     public class MySqlConnectorBenchmark
     {
         private MyConnectorProxy _proxy;
@@ -23,7 +24,7 @@ namespace MySqlConnectorMigration
         public void Init()
         {
             _proxy = new MyConnectorProxy();
-            _proxy.ConnectionString = "data source=localhost; database=test; user id=; password=; port=3306; sslmode=none; minpoolsize=20; maxpoolsize=100";
+            _proxy.ConnectionString = "data source=192.168.0.200; database=test; user id=m3web; password=dpaTmflWkd#$; port=3306; sslmode=none; minpoolsize=20; maxpoolsize=100";
         }
 
         [Benchmark]

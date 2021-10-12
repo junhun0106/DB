@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MITMySqlConnector", "MITMyS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Connector", "Connector", "{C4A05257-0E1B-48AD-9F20-C06E2157A266}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectorProxy", "ConnectorProxy\ConnectorProxy.csproj", "{5707B725-72F6-4ED3-B279-76438067A373}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectorProxy", "ConnectorProxy\ConnectorProxy.csproj", "{5707B725-72F6-4ED3-B279-76438067A373}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbExtensions", "DbExtensions\DbExtensions.csproj", "{E774FA36-79C9-4407-AE10-8EECF5BCFC7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbExtensions", "DbExtensions\DbExtensions.csproj", "{E774FA36-79C9-4407-AE10-8EECF5BCFC7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySqlConnectorMigration.Console", "MySqlConnectorMigration.Console\MySqlConnectorMigration.Console.csproj", "{536A9AAC-B305-42F7-B695-E40489A66EA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{E774FA36-79C9-4407-AE10-8EECF5BCFC7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E774FA36-79C9-4407-AE10-8EECF5BCFC7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E774FA36-79C9-4407-AE10-8EECF5BCFC7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{536A9AAC-B305-42F7-B695-E40489A66EA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{536A9AAC-B305-42F7-B695-E40489A66EA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{536A9AAC-B305-42F7-B695-E40489A66EA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{536A9AAC-B305-42F7-B695-E40489A66EA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
