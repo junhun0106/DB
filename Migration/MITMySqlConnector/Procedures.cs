@@ -9,7 +9,7 @@ namespace MITMySqlConnector
 {
     public static class Procedures
     {
-        public static async Task<int> mit_sp_test(this IConnectorProxy proxy)
+        public static async Task<long> mit_sp_test(this IConnectorProxy proxy)
         {
             const string sp = "sp_test";
             var sw = Stopwatch.StartNew();
@@ -23,7 +23,7 @@ namespace MITMySqlConnector
                         using (var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false)) {
                             while (await reader.ReadAsync().ConfigureAwait(false)) {
                                 // select 0 as 'test_result';
-                                return reader.GetInt("test_result");
+                                var result = reader.GetInt("test_result");
                             }
                         }
                     }
@@ -32,10 +32,10 @@ namespace MITMySqlConnector
                 Console.WriteLine($"{sp} - {e}");
             }
             sw.Stop();
-            if (sw.ElapsedMilliseconds > 500) {
+            if (sw.ElapsedMilliseconds > 100) {
                 Console.WriteLine($"{sp} - {sw.ElapsedMilliseconds}ms");
             }
-            return -1;
+            return sw.ElapsedMilliseconds;
         }
     }
 }
