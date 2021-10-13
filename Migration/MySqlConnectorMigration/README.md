@@ -5,13 +5,20 @@
 
 ---
 
-* 결과만 보면 내가 했던 테스트들에서 MIT가 더 느린 결과가 나오는게 맞다.
 * https://mysqlconnector.net/
   * 이곳에서 보여주는 벤치마크 스크린샷은 .net core 2.1, .net framework 4.7.2를 대상으로 함
   * MySql.Data도 현재 사용하고 있는 버전보다 낮음
   * MySql.Data도 .net 버전이 오르면서 업그레이드를 시도했을 가능성이 높음
 
 ---
+
+* OpenFromPool MySql.Data > MySqlConnector
+* ManyRowsAsync MySqlConnector > MySql.Data
+* 두 개의 차이가 Row를 많이 읽는 경우라 할지라도, Open -> Many Row Read를 하는 경우이므로 간단한 변경은 불가능함
+  * Connection을 미리 Open하고 계속 물고 있는 형태로 변경이 필요
+  * 압도적인 성능 차이가 아니라면 굳이 변경에 시간을 소모 할 필요 없음
+  * Many Row Read에 경우 Row를 많이 읽지 않도록 DB 스키마나 sp를 변경하는게 훨씬 비용 소모 적음(빨리 수정)
+    * 애초에 그렇게 많이 읽는 경우도 없음  
 
 |             Method |        Job |       Runtime |        Library |        Mean |     Error |    StdDev |   StdErr |      Median |         Min |          Q1 |          Q3 |         Max |     Op/s |   Gen 0 |   Gen 1 |   Gen 2 | Allocated |
 |------------------- |----------- |-------------- |--------------- |------------:|----------:|----------:|---------:|------------:|------------:|------------:|------------:|------------:|---------:|--------:|--------:|--------:|----------:|
@@ -27,3 +34,6 @@
 |  OpenFromPoolAsync | Job-TOYYJH | .NET Core 3.1 | MySqlConnector |    825.7 us |  19.63 us |  57.89 us |  5.79 us |    850.1 us |    728.3 us |    763.5 us |    871.2 us |    946.6 us | 1,211.14 |       - |       - |       - |   3,784 B |
 | ExecuteScalarAsync | Job-TOYYJH | .NET Core 3.1 | MySqlConnector |    368.2 us |   4.31 us |   4.03 us |  1.04 us |    367.2 us |    360.2 us |    365.8 us |    370.8 us |    375.9 us | 2,715.69 |       - |       - |       - |   3,385 B |
 |      ManyRowsAsync | Job-TOYYJH | .NET Core 3.1 | MySqlConnector |  1,878.9 us |   8.69 us |   8.13 us |  2.10 us |  1,880.3 us |  1,862.2 us |  1,873.5 us |  1,883.4 us |  1,891.3 us |   532.22 |       - |       - |       - |   3,923 B |
+
+
+* 결론 : 굳이 변경 할 필요 없으며, MySql.Data(Oracle Connector/NET)도 .net 스펙을 충분히 잘 따라오고 있는 것으로 보임.
