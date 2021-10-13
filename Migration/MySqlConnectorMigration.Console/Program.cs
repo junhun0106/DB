@@ -19,7 +19,7 @@ namespace MySqlConnectorMigration.Console
         }
 
         private readonly static IConnectorProxy proxy = new MyConnectorProxy {
-            ConnectionString = "data source=192.168.0.200; database=test; user id=m3web; password=dpaTmflWkd#$; port=3306; sslmode=none; minpoolsize=20; maxpoolsize=100",
+            ConnectionString = "data source=192.168.0.200; database=test; user id=m3web; password=dpaTmflWkd#$; port=3306; sslmode=none; minpoolsize=100; maxpoolsize=100; ConnectionReset=false",
         };
 
         private class LatencyData
@@ -183,7 +183,7 @@ namespace MySqlConnectorMigration.Console
                 {
                     var random = new Random();
                     var result = Parallel.For(0, testCount, async (index) => {
-                        await Task.Delay(random.Next(10, 100)).ConfigureAwait(false);
+                        //await Task.Delay(random.Next(10, 100)).ConfigureAwait(false);
                         await MIT(testName, index).ConfigureAwait(false);
                     });
                     while (!result.IsCompleted) { }

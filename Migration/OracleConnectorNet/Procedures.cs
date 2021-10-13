@@ -10,6 +10,11 @@ namespace OracleConnectorNet
 {
     public static class Procedures
     {
+        public static void ClearPoolAll()
+        {
+            MySqlConnection.ClearAllPools();
+        }
+
         public static async Task<long> oracle_sp_test(this IConnectorProxy proxy)
         {
             const string sp = "sp_test";

@@ -5,6 +5,8 @@ using ConnectorProxy;
 using DbExtensions;
 using System.Diagnostics;
 using MySqlConnector.Logging;
+using System.Threading;
+using System.Data.Common;
 
 namespace MITMySqlConnector
 {
@@ -46,6 +48,11 @@ namespace MITMySqlConnector
             MySqlConnection.ClearAllPools();
         }
 
+        public static DbConnection CreateConnection(this IConnectorProxy proxy)
+        {
+            return new MySqlConnection(proxy.ConnectionString);
+        }
+
         public static async Task<long> mit_sp_test(this IConnectorProxy proxy, int index = 0)
         {
             string logger = $"{nameof(mit_sp_test)}_{index}";
@@ -53,12 +60,7 @@ namespace MITMySqlConnector
             var sw = Stopwatch.StartNew();
             try {
                 using (var conn = new MySqlConnection(proxy.ConnectionString)) {
-                    var sw3 = Stopwatch.StartNew();
                     await conn.OpenAsync().ConfigureAwait(false);
-                    sw3.Stop();
-                    if (sw3.ElapsedMilliseconds > 100) {
-                        Console.WriteLine($"{logger} OpenAsync - {sw3.ElapsedMilliseconds}ms, {conn.ServerThread}");
-                    }
                     using (var cmd = conn.CreateCommand()) {
                         cmd.CommandText = sp;
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -70,6 +72,31 @@ namespace MITMySqlConnector
                         }
                     }
                 }
+            } catch (Exception e) {
+                Console.WriteLine($"{sp} - {e}");
+            }
+            sw.Stop();
+            return sw.ElapsedMilliseconds;
+        }
+
+        public static async Task<long> mit_sp_test(this IConnectorProxy proxy, DbConnection conn, int index = 0)
+        {
+            string logger = $"{nameof(mit_sp_test)}_{index}";
+            const string sp = "sp_test";
+            var sw = Stopwatch.StartNew();
+            try {
+                //await conn.OpenAsync().ConfigureAwait(false);
+                using (var cmd = conn.CreateCommand()) {
+                    cmd.CommandText = sp;
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    using (var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false)) {
+                        while (await reader.ReadAsync().ConfigureAwait(false)) {
+                            // select 0 as 'test_result';
+                            var result = reader.GetInt("test_result");
+                        }
+                    }
+                }
+                //await conn.CloseAsync().ConfigureAwait(false);
             } catch (Exception e) {
                 Console.WriteLine($"{sp} - {e}");
             }
