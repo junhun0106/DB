@@ -83,3 +83,22 @@
 * sp 호출 자체를 확인 했을 때는 오래 걸리지 않는다.
 	* Task가 await 될 때 문제가 되거나(ThreadPool 반환), GC.WaitTime에 걸렸거나 ...
 
+#### 3차 시도
+
+* https://github.com/mysql-net/MySqlConnector/tree/master/tests/Benchmark
+* https://github.com/mysql-net/MySqlConnector/tree/master/tests/MySqlConnector.Performance
+* MySqlConnector 팀에서 만든 벤치마크와 Pref 프로젝트 참고
+
+* .NET 버전 차이가 아닌가 의심. BenchmarkDotNet에 여러 런타임에서 돌릴 수 있도록 구성
+* 성능이 나아지지 않음.
+
+| Method |        Job |       Runtime |     Mean |     Error |    StdDev |    StdErr |   Median |       Min |        Q1 |       Q3 |      Max |  Op/s |  Gen 0 | Allocated |
+|------- |----------- |-------------- |---------:|----------:|----------:|----------:|---------:|----------:|----------:|---------:|---------:|------:|-------:|----------:|
+|    MIT | Job-IBXAQC |      .NET 5.0 | 1.256 ms | 0.0249 ms | 0.0610 ms | 0.0072 ms | 1.278 ms | 1.1484 ms | 1.2008 ms | 1.296 ms | 1.412 ms | 796.5 |      - |      9 KB |
+| Oracle | Job-IBXAQC |      .NET 5.0 | 1.019 ms | 0.0186 ms | 0.0261 ms | 0.0050 ms | 1.018 ms | 0.9730 ms | 0.9996 ms | 1.035 ms | 1.085 ms | 981.1 | 1.9531 |     25 KB |
+|    MIT | Job-YVPNEH | .NET Core 3.1 | 1.162 ms | 0.0194 ms | 0.0182 ms | 0.0047 ms | 1.161 ms | 1.1268 ms | 1.1537 ms | 1.174 ms | 1.195 ms | 860.3 |      - |      9 KB |
+| Oracle | Job-YVPNEH | .NET Core 3.1 | 1.027 ms | 0.0203 ms | 0.0344 ms | 0.0057 ms | 1.027 ms | 0.9589 ms | 1.0050 ms | 1.054 ms | 1.084 ms | 973.4 | 1.9531 |     25 KB |
+
+* 다음으로 의심가는 건 MIT에 Pref Test들을 보면 Connection을 1개만 생성하고 사용하는 걸 볼 수 있음. Oracle이 권장하는 using () { }으로는 성능이 떨어지는 것이 아닐까 ?
+	* https://mysqlconnector.net/tutorials/migrating-from-connector-net/
+	* 해당 링크를 꼼꼼히 읽어봐야  
