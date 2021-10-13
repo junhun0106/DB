@@ -25,18 +25,7 @@ create schema if not exists benchmark;
 
 drop table if exists benchmark.integers;
 create table benchmark.integers (value int not null primary key);
-insert into benchmark.integers(value) values (0),(1),(2),(3),(4),(5),(6),(7),(8),(9);
-
-drop table if exists benchmark.blobs;
-create table benchmark.blobs(
-rowid integer not null primary key auto_increment,
-`Blob` longblob null
-);
-insert into benchmark.blobs(`Blob`) values(null), (@Blob1), (@Blob2);";
-
-					// larger blobs make the tests run much slower
-					AddBlobParameter(cmd, "@Blob1", 75000);
-					AddBlobParameter(cmd, "@Blob2", 150000);
+insert into benchmark.integers(value) values (0),(1),(2),(3),(4),(5),(6),(7),(8),(9);";
 
 					cmd.ExecuteNonQuery();
 				}
@@ -65,31 +54,11 @@ insert into benchmark.blobs(`Blob`) values(null), (@Blob1), (@Blob2);";
 			MySql.Data.MySqlClient.MySqlConnection.ClearAllPools();
 		}
 
-		private static void AddBlobParameter(DbCommand command, string name, int size)
-		{
-			var parameter = command.CreateParameter();
-			parameter.ParameterName = name;
-
-			var random = new Random(size);
-			var value = new byte[size];
-			random.NextBytes(value);
-			parameter.Value = value;
-
-			command.Parameters.Add(parameter);
-		}
-
 		[Benchmark]
 		public async Task OpenFromPoolAsync()
 		{
 			Connection.Close();
 			await Connection.OpenAsync().ConfigureAwait(false);
-		}
-
-		[Benchmark]
-		public void OpenFromPoolSync()
-		{
-			Connection.Close();
-			Connection.Open();
 		}
 
 		[Benchmark]
@@ -100,23 +69,9 @@ insert into benchmark.blobs(`Blob`) values(null), (@Blob1), (@Blob2);";
 			await cmd.ExecuteScalarAsync().ConfigureAwait(false);
 		}
 
-		[Benchmark]
-		public void ExecuteScalarSync()
-		{
-			using var cmd = Connection.CreateCommand();
-			cmd.CommandText = c_executeScalarSql;
-			cmd.ExecuteScalar();
-		}
-
 		private const string c_executeScalarSql = "select max(value) from integers;";
 
-		[Benchmark] public Task ReadBlobsAsync() => ReadAllRowsAsync(c_readBlobsSql);
-		[Benchmark] public void ReadBlobsSync() => ReadAllRowsSync(c_readBlobsSql);
-
-		private const string c_readBlobsSql = "select `Blob` from blobs;";
-
 		[Benchmark] public Task ManyRowsAsync() => ReadAllRowsAsync(c_manyRowsSql);
-		[Benchmark] public void ManyRowsSync() => ReadAllRowsSync(c_manyRowsSql);
 
 		private const string c_manyRowsSql = "select * from integers a join integers b join integers c;";
 
@@ -132,22 +87,6 @@ insert into benchmark.blobs(`Blob`) values(null), (@Blob1), (@Blob2);";
 							total += reader.GetInt32(1);
 					}
 				} while (await reader.NextResultAsync().ConfigureAwait(false));
-			}
-			return total;
-		}
-
-		private int ReadAllRowsSync(string sql)
-		{
-			int total = 0;
-			using (var cmd = Connection.CreateCommand()) {
-				cmd.CommandText = sql;
-				using var reader = cmd.ExecuteReader();
-				do {
-					while (reader.Read()) {
-						if (reader.FieldCount > 1)
-							total += reader.GetInt32(1);
-					}
-				} while (reader.NextResult());
 			}
 			return total;
 		}
