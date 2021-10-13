@@ -81,7 +81,7 @@ namespace MySqlConnectorMigration.Console
         {
             const string prefix = nameof(MIT);
             var _key = prefix + "_" + key;
-            var ems = await proxy.mit_sp_test().ConfigureAwait(false);
+            var ems = await proxy.mit_sp_test(index).ConfigureAwait(false);
             Latency(_key, ems, index);
         }
 
@@ -126,33 +126,24 @@ namespace MySqlConnectorMigration.Console
 
         private static void Main(string[] _)
         {
+            ThreadPool.GetMaxThreads(out var worker, out var cp);
+            System.Console.WriteLine($"worker : {worker}, completeport: {cp}");
+
+            MITMySqlConnector.Procedures.ClearPoolAll();
 
             // warm_up
             {
-                const int warmUpCount = 10;
-                int count = 0;
                 const string testName = "warm_up";
-                System.Console.WriteLine($"{testName} start... warm_up count : {warmUpCount}");
+                System.Console.WriteLine($"[TEST] {testName} start");
                 var sw = Stopwatch.StartNew();
-                Parallel.For(0, warmUpCount, async (index) => {
-                    await MIT(testName, index).ConfigureAwait(false);
-                    Interlocked.Increment(ref count);
-                });
-                Parallel.For(0, warmUpCount, async (index) => {
-                    await Oracle(testName, index).ConfigureAwait(false);
-                    Interlocked.Increment(ref count);
-                });
-
-                while (true) {
-                    if (count == warmUpCount * 2) {
-                        break;
-                    }
-                }
-
+                MIT(testName, 0).Wait();
+                Oracle(testName, 0).Wait();
                 sw.Stop();
-                System.Console.WriteLine($"{testName} - {sw.ElapsedMilliseconds}ms");
+                System.Console.WriteLine($"[TEST] {testName} end - {sw.ElapsedMilliseconds}ms");
+                GC.Collect();
+                Thread.Sleep(1000);
             }
- 
+
             // sync test
             //{
             //    const int testCount = 100;
@@ -174,28 +165,33 @@ namespace MySqlConnectorMigration.Console
 
             // async test
             {
-                int count = 0;
                 const int testCount = 100;
                 const string testName = "async_test";
-                System.Console.WriteLine($"{testName} start... test count : {testCount}");
+                System.Console.WriteLine($"[TEST] {testName} start test count : {testCount}");
                 var sw = Stopwatch.StartNew();
-                Parallel.For(0, testCount, async (index) => {
-                    await Oracle(testName, index).ConfigureAwait(false);
-                    Interlocked.Increment(ref count);
-                });
-                Parallel.For(0, testCount, async (index) => {
-                    await MIT(testName, index).ConfigureAwait(false);
-                    Interlocked.Increment(ref count);
-                });
-                sw.Stop();
-
-                while (true) {
-                    if (count == testCount * 2) {
-                        break;
-                    }
+                {
+                    var random = new Random();
+                    var result = Parallel.For(0, testCount, async (index) => {
+                        await Task.Delay(random.Next(10, 100)).ConfigureAwait(false);
+                        await Oracle(testName, index).ConfigureAwait(false);
+                    });
+                    while (!result.IsCompleted) { }
+                    GC.Collect();
+                    Thread.Sleep(1000);
                 }
 
-                System.Console.WriteLine($"{testName} - {sw.ElapsedMilliseconds}ms");
+                {
+                    var random = new Random();
+                    var result = Parallel.For(0, testCount, async (index) => {
+                        await Task.Delay(random.Next(10, 100)).ConfigureAwait(false);
+                        await MIT(testName, index).ConfigureAwait(false);
+                    });
+                    while (!result.IsCompleted) { }
+                    GC.Collect();
+                    Thread.Sleep(1000);
+                }
+                sw.Stop();
+                System.Console.WriteLine($"[TEST] {testName} end. et : {sw.ElapsedMilliseconds}ms");
             }
 
             foreach (var kv in _data.OrderBy(x => x.Key)) {
