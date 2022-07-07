@@ -8,7 +8,7 @@ namespace RedisTestProject
 {
     public class RedisProvider
     {
-        private static IRedisCacheConnectionPoolManager _redisPoolManager;
+        private static IRedisConnectionPoolManager _redisPoolManager;
         private static RedisConfiguration _redisConfiguration;
         private static ISerializer _serializer;
 
@@ -25,12 +25,12 @@ namespace RedisTestProject
                     UnreachableServerAction = ServerEnumerationStrategy.UnreachableServerActionOptions.Throw
                 },
             };
-            _redisPoolManager = new RedisCacheConnectionPoolManager(_redisConfiguration);
+            _redisPoolManager = new RedisConnectionPoolManager(_redisConfiguration);
         }
 
         public IRedisDatabase GetClient(int machineId = 0)
         {
-            var cacheClient = new RedisCacheClient(_redisPoolManager, _serializer, _redisConfiguration);
+            var cacheClient = new RedisClient(_redisPoolManager, _serializer, _redisConfiguration);
             return cacheClient.GetDb(machineId);
         }
     }
