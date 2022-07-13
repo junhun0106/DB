@@ -24,9 +24,3 @@
 * https://mysqlconnector.net/connection-options/
 
 * https://dev.mysql.com/doc/connector-net/en/connector-net-6-10-connection-options.html
-
----
-
-# REDIS
-
-* [레디스 테스트 프로젝트](https://github.com/junhun0106/DB-REDIS/tree/main/Redis)
