@@ -3,12 +3,8 @@ using Polly;
 using System;
 using System.Threading;
 
-namespace FailOverTest
+namespace MySqlFailOverTester
 {
-    public class MySqlForcedException : Exception
-    {
-    }
-
     public static class MySqlExceptionHandler
     {
         public static bool IsFailOverException(Exception e)
@@ -26,17 +22,15 @@ namespace FailOverTest
                     case MySqlErrorCode.NewAbortingConnection:
                         return true;
                 }
-            } else if (e is MySqlForcedException) {
-                return true;
             }
 
             return false;
         }
     }
 
-    class Program
+    static class Program
     { 
-        static void Main(string[] args)
+        static void Main(string[] _)
         {
             var now = DateTime.Now;
 
@@ -98,12 +92,6 @@ namespace FailOverTest
                     var _ = reader.GetInt32(reader.GetOrdinal("test_result"));
                 }
             }
-            // catch (MySqlForcedException e) {
-            //    if (conn != null) {
-            //        MySqlConnection.ClearPool(conn);
-            //    }
-            //    throw;
-            //}
             catch (MySqlException e) when (MySqlExceptionHandler.IsFailOverException(e)) {
                 if (conn != null) {
                     // DNS 캐시 등 초기화 FailOver를 감지한 경우 초기화 처리가 진행 되어야 한다
