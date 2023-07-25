@@ -7,7 +7,8 @@
 * [MySqlConnector](https://github.com/junhun0106/DB-REDIS/tree/main/Migration)
   * 여러 Coneector를 사용해보고, 빠르고 사용하기 쉬운 라이브러리를 찾아보자. 
 
-
+* Microsoft.Data.SqlClient bug issue
+  * https://github.com/dotnet/SqlClient/issues/2104
 
 ### DB FailOver
 
